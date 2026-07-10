@@ -1,0 +1,22 @@
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  body      String
+  data      Json?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model PushSubscription {
+  id             String    @id @default(cuid())
+  endpoint       String    @unique
+  p256dh         String
+  auth           String
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  expirationTime DateTime?
+
+  createdAt DateTime @default(now())
+}

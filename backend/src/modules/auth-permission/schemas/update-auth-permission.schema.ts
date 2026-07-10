@@ -1,0 +1,19 @@
+import { z } from "zod";
+
+const UpdateAuthPermissionSchema = z.object({
+  resource: z.string().optional(),
+  action: z.string().min(1).optional(),
+  roles: z
+    .array(
+      z.object({
+        id: z.string().min(1, "Role ID is required"),
+      })
+    )
+    .optional(),
+});
+
+export default UpdateAuthPermissionSchema;
+
+export type UpdateAuthPermissionSchemaType = z.infer<
+  typeof UpdateAuthPermissionSchema
+>;
